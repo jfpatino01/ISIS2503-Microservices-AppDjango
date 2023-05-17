@@ -1,4 +1,3 @@
-from places.places.views import PlacesList
 from .models import Measurement
 from django.shortcuts import render, redirect
 from django.contrib import messages
