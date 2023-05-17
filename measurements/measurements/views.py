@@ -1,3 +1,4 @@
+from places.places.views import PlacesList
 from .models import Measurement
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -31,8 +32,13 @@ def MeasurementCreate(request):
             measurement.value = data_json['value']
             measurement.unit = data_json['unit']
             measurement.place = data_json['place']
-            measurement.save()
-            return HttpResponse("successfully created measurement")
+
+            if measurement.place in PlacesList():
+                measurement.save()
+                return HttpResponse("successfully created measurement")
+            else:
+                return HttpResponse("unsuccessfully created measurement. Place does not exist")
+
         else:
             return HttpResponse("unsuccessfully created measurement. Variable does not exist")
 
@@ -48,7 +54,9 @@ def MeasurementsCreate(request):
                         db_measurement.value = measurement['value']
                         db_measurement.unit = measurement['unit']
                         db_measurement.place = measurement['place']
-                        measurement_list.append(db_measurement)
+
+                        if db_measurement.place in PlacesList():
+                            measurement_list.append(db_measurement)
                     else:
                         return HttpResponse("unsuccessfully created measurement. Variable does not exist")
         
