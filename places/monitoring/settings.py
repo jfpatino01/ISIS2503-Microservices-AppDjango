@@ -132,5 +132,3 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
-
-PATH_VAR = "http://0.0.0.0:8080/variables"
